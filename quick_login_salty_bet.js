@@ -43,7 +43,7 @@ var tempValueArray = ['email', 'text', '', 'email'];
 function loopThrough(a , b , c){
 var j = b.length;
 	for(var i  = 0; i < j; i++){
-	a.setAttribute(b[i], c[i]);
+		a.setAttribute(b[i], c[i]);
 	}
 
 	return a;
@@ -52,7 +52,7 @@ var j = b.length;
 function appendKids(a , b){
 			var j = b.length;
 		for(var i = 0; i < j; i++){
-			a.appendChild(b[i]);
+				a.appendChild(b[i]);
 			}
 	return a;
 }
