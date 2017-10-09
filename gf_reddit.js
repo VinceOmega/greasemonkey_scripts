@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  Le Reddit? In MY GameFAQS?
 // @author       Larry Stanfield - https://www.linkedin.com/in/larrystanfieldwebdev
-// @match        http://*.gamefaqs.com/boards/*
+// @match        https://*.gamefaqs.com/boards/*
 // @require      https://cdnjs.cloudflare.com/ajax/libs/mootools/1.6.0/mootools-core.min.js
 // @run-at       document-end
 // @grant        none
@@ -13,45 +13,54 @@
 (function() {
     'use strict';
 
-    
-    var postNumArr     = $$('div.msg_body.newbeta').get('data-msgnum');
-    var postIDArr      = $$('div.msg_body.newbeta').get('name');
-    var postUserArr    = $$('.post_author b').get('text');
-    var alphaNum       = new RegExp(/([A-Za-z0-9\_]+)/i);
-    var url            = window.location.pathname;
-    var slugs          = url.split('/');
-    
+
+    var postNumArr      = $$('div.msg_body.newbeta').get('data-msgnum');
+    var postIDArr       = $$('div.msg_body.newbeta').get('name');
+    var postUserArr     = $$('.user_submenu').get('data-username');
+    var url             = window.location.pathname;
+    var slugs           = url.split('/');
+    var userArray       = {};
+    var key;
+    userArray           = {
+                        "postNum":[],
+                        "postID":[],
+                        "postUser":[],
+                        "board-slug":slugs[2],
+                        "topic-slug":slugs[3]
+    };
+
+    //Put all the post Numbers in an Array
+    for( key in postNumArr ){
+        if( !isNaN( postNumArr[ key ] ) ) userArray.postNum.push( postNumArr[ key ] );
+    }
+
+    //Put all the post IDs in an Array
+    for( key in postIDArr ){
+       if( !isNaN( postNumArr[ key ] ) ) userArray.postID.push( postIDArr[ key ] );
+    }
+
+    //Put all the post User in an Array
+    for( key in postUserArr ){
+       if( typeof postNumArr[ key ] === 'string' ) userArray.postUser.push( postUserArr[ key ] );
+    }
+
     //console.log(postNumArr[0]);
     //console.log(postIDArr[0]);
     //console.log(postUserArr[0]);
-    
-    console.log('List of Post #s');
-    for(var a in postNumArr){
-      if(!isNaN(postNumArr[a])){
-        console.log(postNumArr[a]);
-     }
-    }
-    
-    console.log('List of IDs');
-    for(var b in postIDArr){
-     if(!isNaN(postIDArr[b])){
-       console.log(postIDArr[b]);
-     }
-    }
-    
-    console.log('List of Username');
-     console.log(alphaNum.test(postUserArr[0]));
-     
-    
-    for(var c in postUserArr){
-     if(alphaNum.test(postUserArr[c]) && typeof(postUserArr[c]) !=  'function'){
-        console.log(postUserArr[c]);
-     }
-    }
-    
-    
-    console.log('Url Slugs');
-    console.log(slugs[2]);
-    console.log(slugs[3]);
-    
+    //console.log(slugs[2]);
+    //console.log(slugs[3]);
+
+
+    var server = new Request({
+       url: 'https://gamefaqspostrankings.larrystanfield.com',
+       method: 'post',
+       headers: {'Access-Control-Allow-Origin': '*'},
+       data: userArray,
+       onSuccess: function(event, xhr){
+        console.log(xhr);
+        console.log(event);
+       }
+    });
+    server.send();
+
 })();
