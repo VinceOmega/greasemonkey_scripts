@@ -55,11 +55,11 @@ try{
                                         var html = `
                                             <div style="display: block; background-image: url( ${ banner[ 0 ].url } ); width: 100%; object-fit: contain; height: 100%; background-size: cover; background-repeat: no-repeat;" ></div>
                                             <div style="dipslay: block; background: black; width: 100%; height: 100%;" >
-                                                <span style="display: inline-block; width: 30%; height: 100%; position: relative;"><a href='${ json[ 'urlCanonical' ] }' style="background-image: url( ${ thumbnails[ 0 ].url } ); width: 100%; height: inherit; display: inline-block; position: relative; object-fit: contain; background-size: contain; background-repeat: no-repeat;"></a></span>
-                                                <span style="display: inline-block; width: 30%; height: 100%; position: relative;">${ json[ 'title' ] }</span>
-                                                <span style="display: inline-block; width: 30%; height: 100%; position: relative;"> Subscribers: ${ subInfo[ 'simpleText' ] }</span>
+                                            <span style="display: inline-block; width: 30%; height: 100%; position: relative;"><a href='${ json[ 'urlCanonical' ] }' style="background-image: url( ${ thumbnails[ 0 ].url } ); width: 100%; height: inherit; display: inline-block; position: relative; object-fit: contain; background-size: contain; background-repeat: no-repeat;"></a></span>
+                                            <span style="display: inline-block; width: 30%; height: 100%; position: relative;">${ json[ 'title' ] }</span>
+                                            <span style="display: inline-block; width: 30%; height: 100%; position: relative;"> Subscribers: ${ subInfo[ 'simpleText' ] }</span>
                                             </div>
-                                         `;
+`;
                                         self.parent().children( '#preview-box' ).append( html );
                                     }
                                 }
@@ -69,26 +69,24 @@ try{
 
                             });
 
-                        }
-                    }
-                });
+                            $( this ).hover(
+                                function(){
+                                    console.log( 'hover over' );
+                                    if( $( this ).parent().find( '#preview-box' ).length ){
+                                        $( this ).parent().children( '#preview-box' ).css( 'display', 'inline' );
+                                    }
+                                },
+                                function(){
+                                    console.log( 'hover under' );
+                                    if( $( this ).parent().find( '#preview-box' ).length ){
+                                        $( this ).parent().children( '#preview-box' ).css( 'display', 'none' );
+                                    }
+                                });
 
-                $( ".ytd-comment-renderer" ).each( function( el ) {
-                    if( $( this ).parent().prop( 'id' ) === 'author-text' ){
-                        $( this ).hover(
-                            function(){
-                                console.log( 'hover over' );
-                                if( $( this ).parent().parent().find( '#preview-box' ).length ){
-                                    $( this ).parent().parent().children( '#preview-box' ).css( 'display', 'inline' );
-                                }
-                            },
-                            function(){
-                                console.log( 'hover under' );
-                                if( $( this ).parent().parent().find( '#preview-box' ).length ){
-                                    $( this ).parent().parent().children( '#preview-box' ).css( 'display', 'none' );
-                                }
-                            });
+                        }
+
                     }
+
 
                 });
 
